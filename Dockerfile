@@ -32,16 +32,17 @@ RUN useradd -ms /bin/bash $USERNAME && \
     usermod -aG sudo $USERNAME && \
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Switch to the new user
+# Install Oh My Zsh manually for the user and enable fzf plugin
+USER root
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git /home/$USERNAME/.oh-my-zsh && \
+    cp /home/$USERNAME/.oh-my-zsh/templates/zshrc.zsh-template /home/$USERNAME/.zshrc && \
+    sed -i 's/plugins=(git)/plugins=(git fzf)/' /home/$USERNAME/.zshrc && \
+    chown -R $USERNAME:$USERNAME /home/$USERNAME/.oh-my-zsh /home/$USERNAME/.zshrc
+
+# Switch to dev user
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-# Install Oh My Zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
-    # Set Zsh as default shell
-    chsh -s $(which zsh) $USERNAME && \
-    # Enable fzf plugin in .zshrc
-    sed -i 's/plugins=(git)/plugins=(git fzf)/' ~/.zshrc
-
-# Default shell
+# Use zsh as default shell
+SHELL ["/bin/zsh", "-c"]
 CMD ["zsh"]
