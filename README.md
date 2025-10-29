@@ -1,5 +1,7 @@
 # DevContainer
 
+![Banner](./banner.png)
+
 A multi-architecture development container image based on Ubuntu 24.04, pre-configured with essential development tools and a comfortable shell environment.
 
 [![Docker Build](https://github.com/whogotpwned/DevContainer/actions/workflows/docker-build.yml/badge.svg)](https://github.com/whogotpwned/DevContainer/actions/workflows/docker-build.yml)
