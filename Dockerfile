@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install common tools
 RUN apt-get update && apt-get install -y \
     git curl wget vim nano make build-essential \
-    python3 python3-pip \
+    python3 python3-venv python3-pip \
     nodejs npm \
     golang \
     docker.io \
