@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     golang \
     docker.io \
     openssh-client \
+    dnsutils \
+    sudo \
     # WeasyPrint dependencies
     libcairo2 libcairo2-dev \
     libpango-1.0-0 libpango1.0-dev \
