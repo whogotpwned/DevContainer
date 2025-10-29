@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     openssh-client \
     dnsutils \
     sudo \
+    zsh \
+    fzf \
     # WeasyPrint dependencies
     libcairo2 libcairo2-dev \
     libpango-1.0-0 libpango1.0-dev \
@@ -24,13 +26,22 @@ RUN apt-get update && apt-get install -y \
     libfontconfig1 libfreetype6 libharfbuzz-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set up a user (optional)
+# Set up a user and allow passwordless sudo
 ARG USERNAME=dev
 RUN useradd -ms /bin/bash $USERNAME && \
-    usermod -aG sudo $USERNAME
+    usermod -aG sudo $USERNAME && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+# Switch to the new user
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
+# Install Oh My Zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
+    # Set Zsh as default shell
+    chsh -s $(which zsh) $USERNAME && \
+    # Enable fzf plugin in .zshrc
+    sed -i 's/plugins=(git)/plugins=(git fzf)/' ~/.zshrc
+
 # Default shell
-CMD [ "bash" ]
+CMD ["zsh"]
