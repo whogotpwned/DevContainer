@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 # --- Basis: Ubuntu 24.04 für beide Architekturen ---
-FROM --platform=${BUILDPLATFORM:-linux/amd64} ubuntu:24.04
+FROM --platform=${TARGETPLATFORM:-linux/amd64} ubuntu:24.04
 
 # Docker setzt automatisch diese Variablen:
 # BUILDPLATFORM -> Host (z.B. linux/amd64)
@@ -35,14 +35,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev libxml2-dev libxslt1-dev \
     libfontconfig1 libfreetype6 libharfbuzz-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# --- ARM64-spezifische Fixes (z. B. Node oder Go Toolchains) ---
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        echo "Applying ARM64 specific adjustments..." && \
-        npm install -g npm@latest; \
-    else \
-        echo "No ARM64-specific adjustments needed."; \
-    fi
 
 # --- Benutzer einrichten ---
 RUN useradd -ms /bin/bash $USERNAME && \
