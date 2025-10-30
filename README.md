@@ -2,16 +2,24 @@
 
 ![Banner](./banner.png)
 
-A multi-architecture development container image based on Ubuntu 24.04, pre-configured with essential development tools and a comfortable shell environment.
+A production-ready multi-architecture development container image based on Ubuntu 24.04, pre-configured with essential development tools and a comfortable shell environment for modern development workflows.
 
 [![Docker Build](https://github.com/whogotpwned/DevContainer/actions/workflows/docker-build.yml/badge.svg)](https://github.com/whogotpwned/DevContainer/actions/workflows/docker-build.yml)
+
+![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-E95420?style=flat-square&logo=ubuntu&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-24.10-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Multi-Arch](https://img.shields.io/badge/multi--arch-amd64%20%7C%20arm64-0078D4?style=flat-square&logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Go](https://img.shields.io/badge/Go-1.23-00ADD8?style=flat-square&logo=go&logoColor=white)
+![Zsh](https://img.shields.io/badge/Zsh-5.9-1B2C34?style=flat-square&logo=gnu-bash&logoColor=white)
 
 ## Features
 
 - **Multi-architecture support**: Built for both `linux/amd64` and `linux/arm64` platforms
-- **Pre-installed development tools**: Python, Node.js, Go, Docker, and more
-- **Enhanced shell environment**: Includes zsh with Oh My Zsh and fzf for an improved terminal experience
-- **Ready-to-use**: No additional configuration required
+- **Comprehensive development toolkit**: Python, Node.js, Go, Docker, and essential build tools
+- **Enhanced shell experience**: Includes zsh with Oh My Zsh and fzf for superior productivity
+- **Zero-configuration**: Ready to use immediately without additional setup
 
 ## Architecture Support
 
@@ -24,7 +32,7 @@ Both architectures are automatically built and pushed to the GitHub Container Re
 ## Prerequisites
 
 - Docker or a Docker-compatible container runtime
-- For local builds: Docker Buildx (included with Docker Desktop)
+- For local multi-arch builds: Docker Buildx (included with Docker Desktop)
 
 ## Building Locally
 
@@ -52,7 +60,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t devcontainer:latest --
 
 ### Custom Build Arguments
 
-You can customize the container during build:
+Customize the container during build:
 
 ```bash
 docker build --build-arg USERNAME=myuser -t devcontainer:latest .
@@ -81,7 +89,7 @@ docker run -it --rm \
 
 ### With Docker-in-Docker
 
-If you need Docker inside the container:
+Run Docker commands inside the container:
 
 ```bash
 docker run -it --rm \
@@ -91,49 +99,60 @@ docker run -it --rm \
 
 ### Interactive Development
 
-The container starts with zsh as the default shell. The default user is `dev` with sudo privileges (no password required).
+The container starts with zsh as the default shell. The default user is `dev` with passwordless sudo privileges for seamless development.
 
 ## Included Tools
 
-The container comes pre-installed with:
-
-### Core Development Tools
-- **Git**: Version control system
-- **Build tools**: `make`, `build-essential`
-- **Text editors**: `vim`, `nano`
+The container comes pre-installed with a comprehensive set of development tools:
 
 ### Programming Languages
-- **Python 3**: Python runtime with `pip` and `venv`
+
+- **Python 3**: Runtime with `pip` and `venv`
 - **Node.js**: JavaScript runtime with `npm`
 - **Go**: Go programming language
 
+### Version Control & Build Tools
+
+- **Git**: Version control system
+- **make**: Build automation tool
+- **build-essential**: Essential compilation tools
+
+### Text Editors
+
+- **vim**: Advanced text editor
+- **nano**: Simple terminal editor
+
 ### Container Tools
+
 - **Docker**: Docker daemon and client (`docker.io`)
 
 ### Shell Environment
-- **zsh**: Z shell with enhanced features
-- **Oh My Zsh**: Framework for managing zsh configuration
-- **fzf**: Fuzzy finder for command-line
-- Configured plugins: `git`, `fzf`
 
-### System Utilities
+- **zsh**: Enhanced Z shell
+- **Oh My Zsh**: zsh configuration framework
+- **fzf**: Command-line fuzzy finder
+- **Configured plugins**: `git`, `fzf`
+
+### Network & System Tools
+
 - **curl**, **wget**: HTTP clients
 - **openssh-client**: SSH client tools
 
-### WeasyPrint Dependencies
-The container includes all dependencies required for WeasyPrint (Python PDF library):
+### Python Libraries
+
+**WeasyPrint Dependencies**: All dependencies required for WeasyPrint (Python PDF library):
 - Cairo graphics library and development files
 - Pango text layout engine
 - GDK-Pixbuf image loading library
-- Various font and image processing libraries
+- Font and image processing libraries
 
 ## Image Details
 
 - **Base Image**: `ubuntu:24.04`
-- **Default User**: `dev` (configurable via build arg `USERNAME`)
+- **Default User**: `dev` (configurable via `USERNAME` build arg)
 - **Working Directory**: `/home/dev`
 - **Default Shell**: `/usr/bin/zsh`
-- **User Privileges**: `dev` user has sudo access (no password required)
+- **User Privileges**: Passwordless sudo access
 
 ## CI/CD
 
@@ -153,7 +172,8 @@ The workflow builds multi-architecture images for both `linux/amd64` and `linux/
 docker pull ghcr.io/whogotpwned/devcontainer:latest
 ```
 
-**Note**: Make sure you're logged into GHCR if the repository is private:
+**Note**: For private repositories, authenticate with GHCR:
+
 ```bash
 echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
 ```
@@ -191,4 +211,3 @@ Check the repository for license information.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
-
